@@ -36,44 +36,56 @@ func Coder_createCoder(bitmap image.Image, colors int) *Coder {
 	fmt.Println(bitmap.Bounds().Max.Y + 1)
 	fmt.Println(bitmap.Bounds().Max.X + 1)
 
-	for i := 0; i < bitmap.Bounds().Max.Y; i++ {
-		for j := 0; j < bitmap.Bounds().Max.X; j++ {
+	for j := 0; j < bitmap.Bounds().Max.Y; j++ {
+		for i := 0; i < bitmap.Bounds().Max.X; i++ {
 			r, g, b, _ := bitmap.At(i, j).RGBA()
+
 			newPixel := &pixel{colorVector: [3]uint32{r / 256, b / 256, g / 256}}
 			coder.rgbBitMap = append(coder.rgbBitMap, newPixel)
 		}
 
 	}
+	fmt.Println(len(coder.rgbBitMap))
 	// fmt.Println(coder.rgbBitMap[0])
 	coder.width = uint32(bitmap.Bounds().Max.X)
 	coder.height = uint32(bitmap.Bounds().Max.Y)
+
 	coder.OutBitmap = make([][]*pixel, coder.height)
 	coder.img = bitmap
 	for i := range coder.OutBitmap {
 		coder.OutBitmap[i] = make([]*pixel, coder.width)
 	}
+	fmt.Println(len(coder.OutBitmap), len(coder.OutBitmap[0]))
+
 	coder.codebook = coder.generateCodebook(colors)
 	return coder
 }
 
 func (c *Coder) Coder_run() {
+	fmt.Println((c.height)*(c.width), c.height, c.width)
 	for i := uint32(0); i < c.height; i++ {
-		for j := uint32(0); i < c.width; j++ {
+		// fmt.Println(i, c.height)
+		for j := uint32(0); j < c.width; j++ {
+
 			diffs := make([]float64, len(c.codebook))
-			fmt.Println(c.codebook)
+			// fmt.Println(c.codebook)
+			// fmt.Println(i, j, c.width)
+			pixIndex := i*(c.width) + j
+			// fmt.Println(pixIndex)
 			for k, vec := range c.codebook {
-				pixIndex := i*c.height + j
-				// fmt.Println(c.rgbBitMap[pixIndex])
-				diffs[k] = eucSqr(pixelToFloat64(c.rgbBitMap[pixIndex]), pixelToFloat64(vec))
+
+				diffs[k] = taxicab(pixelToFloat64(c.rgbBitMap[pixIndex]), pixelToFloat64(vec))
 			}
+
 			minDiff := math.MaxFloat64
 			minIndex := 0
-			for i := range diffs {
-				if diffs[i] < minDiff {
-					minDiff = diffs[i]
-					minIndex = i
+			for k := range diffs {
+				if diffs[k] < minDiff {
+					minDiff = diffs[k]
+					minIndex = k
 				}
 			}
+			// fmt.Println(i, j, minIndex, len(c.codebook))
 			c.OutBitmap[i][j] = c.codebook[minIndex]
 		}
 	}
@@ -84,7 +96,7 @@ func (c *Coder) Coder_getImage() image.Image {
 
 	width := int(c.width)
 	height := int(c.height)
-
+	fmt.Println(width, height)
 	upLeft := image.Point{0, 0}
 	lowRight := image.Point{width, height}
 
@@ -92,11 +104,11 @@ func (c *Coder) Coder_getImage() image.Image {
 
 	copier.Copy(&img, &c.img)
 
-	for i := 0; i < int(width); i++ {
-		for j := 0; j < int(height); j++ {
+	for i := 0; i < int(height); i++ {
+		for j := 0; j < int(width); j++ {
 			pixcols := c.OutBitmap[i][j].colorVector
-			col := color.RGBA{uint8(pixcols[RED]), uint8(pixcols[GREEN]), uint8(pixcols[BLUE]), 1.0}
-			img.Set(i, j, col)
+			col := color.RGBA{uint8(pixcols[RED]), uint8(pixcols[GREEN]), uint8(pixcols[BLUE]), 0.0}
+			img.Set(j, i, col)
 
 		}
 
@@ -116,6 +128,7 @@ func (c *Coder) generateCodebook(size int) []*pixel {
 
 	for len(codebook) < size {
 		codebook, avgDit = c.splitCodebook(codebook, eps, avgDit)
+		fmt.Println("a")
 	}
 
 	return castCodebook(codebook)
@@ -133,7 +146,7 @@ func (c *Coder) calcAvgDistortionWithSingleVec(vec0 [3]float64, vectors [][3]flo
 	toRet := 0.0
 
 	for _, vec := range vectors {
-		dist := eucSqr(vec0, vec)
+		dist := taxicab(vec0, vec)
 		toRet += dist / float64(len(vec))
 	}
 
@@ -144,18 +157,18 @@ func (c *Coder) calcAvgDistortionWithDoubleVec(vectorsA [][3]float64, vectorsB [
 	toRet := 0.0
 
 	for i := range vectorsA {
-		dist := eucSqr(vectorsA[i], vectorsB[i])
+		dist := taxicab(vectorsA[i], vectorsB[i])
 		toRet += dist / float64(len(vectorsA))
 	}
 
 	return toRet
 }
 
-func eucSqr(vec1, vec2 [3]float64) float64 {
+func taxicab(vec1, vec2 [3]float64) float64 {
 	sum := 0.0
 
 	for i := range vec1 {
-		sum += math.Pow(vec1[i]-vec2[i], 2.0)
+		sum += math.Abs(vec1[i] - vec2[i])
 	}
 
 	return sum
@@ -183,19 +196,12 @@ func (c *Coder) splitCodebook(codebook [][3]float64, eps float64, initAvgDist fl
 			minDist := -1.0
 			closestIndex := -1
 			for j := 0; j < len(codebook); j++ {
-				d := eucSqr(c.doubleData[i], codebook[j])
+				d := taxicab(c.doubleData[i], codebook[j])
 				if j == 0 || d < minDist {
 					minDist = d
 					closest[i] = codebook[j]
 					closestIndex = j
 				}
-			}
-			if _, err := nearestVectors[closestIndex]; err {
-				nearestVectors[closestIndex] = make([][3]float64, 0)
-			}
-
-			if _, err := nearestVectorsIndexes[closestIndex]; err {
-				nearestVectorsIndexes[closestIndex] = make([]int, 0)
 			}
 
 			nearestVectors[closestIndex] = append(nearestVectors[closestIndex], c.doubleData[i])
@@ -230,7 +236,7 @@ func (c *Coder) splitCodebook(codebook [][3]float64, eps float64, initAvgDist fl
 }
 
 func castCodebook(vectors [][3]float64) []*pixel {
-	codebook := make([]*pixel, len(vectors))
+	codebook := make([]*pixel, 0)
 
 	for _, n := range vectors {
 		pix := &pixel{colorVector: [3]uint32{uint32(n[RED]), uint32(n[GREEN]), uint32(n[BLUE])}}
@@ -261,4 +267,24 @@ func getOneVectorToRuleThemAll(vectors [][3]float64) [3]float64 {
 func pixelToFloat64(pix *pixel) [3]float64 {
 	colors := pix.colorVector
 	return [3]float64{float64(colors[RED]), float64(colors[GREEN]), float64(colors[BLUE])}
+}
+
+func (c *Coder) Coder_Mse() float64 {
+	sum := 0.0
+	for i := uint32(0); i < c.height; i++ {
+		for j := uint32(0); j < c.width; j++ {
+			sum += taxicab(pixelToFloat64(c.rgbBitMap[i*(c.width)+j]), pixelToFloat64(c.OutBitmap[i][j]))
+		}
+	}
+	return sum / float64((c.width * c.height))
+}
+
+func (c *Coder) Coder_Snr(MSE float64) float64 {
+	sum := 0.0
+	for _, pix := range c.rgbBitMap {
+		colors := pix.colorVector
+		sum += math.Pow(float64(colors[RED]), 2) + math.Pow(float64(colors[GREEN]), 2) + math.Pow(float64(colors[RED]), 2)
+
+	}
+	return (sum * (1.0 / float64(c.width*c.height))) / MSE
 }

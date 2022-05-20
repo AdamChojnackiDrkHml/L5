@@ -1,0 +1,9 @@
+#!/bin/bash
+rm data/results/*
+rm data/output/*
+make
+for i in {0..24}
+do
+    echo "$i"
+    ./build/coder/coder data/input/testy4/example0.tga "data/output/test$i.tga" "$i" > "data/results/res$i.txt"
+done
