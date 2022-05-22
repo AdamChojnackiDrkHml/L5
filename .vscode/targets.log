@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Apr 28 19:14:01 2022
+# Make data base, printed on Sun May 22 22:41:30 2022
 
 # Variables
 
@@ -21,9 +21,9 @@ NO_AT_BRIDGE = 1
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/adam/.gtkrc:/home/adam/.config/gtkrc
 # environment
-UUID = 57672b51-20f4-4a1c-ae42-c7b14c30d62c
+UUID = 44db3c14-bb9d-4e5b-98e0-67390a2dcca0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c341aa4e-5a39-4ce5-ae92-1ba97d727fb9.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f7708863-caed-4bee-b084-28141f33693f.sock
 # environment
 LC_NAME = pl_PL.UTF-8
 # environment
@@ -47,7 +47,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # environment
-PWD = /home/adam/Uczelnia/VISEM/KKD/L4
+PWD = /home/adam/L5
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -61,7 +61,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/adam/.config/Code/CachedData/dfd34e8260c270da74b5c2d86d61aee4b6d56977
+VSCODE_CODE_CACHE_PATH = /home/adam/.config/Code/CachedData/e18005f0f1b33c29e81d732535d8c0e47cafb0b5
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -75,7 +75,7 @@ XAUTHORITY = /home/adam/.Xauthority
 # makefile
 MAKEFLAGS = pqrR
 # makefile
-CURDIR := /home/adam/Uczelnia/VISEM/KKD/L4
+CURDIR := /home/adam/L5
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -107,13 +107,13 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 14743
+VSCODE_PID = 1082
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/adam-b550aoruselitev2:@/tmp/.ICE-unix/846,unix/adam-b550aoruselitev2:/tmp/.ICE-unix/846
+SESSION_MANAGER = local/adam-virtualbox:@/tmp/.ICE-unix/618,unix/adam-virtualbox:/tmp/.ICE-unix/618
 # automatic
 *F = $(notdir $*)
 # environment
@@ -137,9 +137,11 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/adam/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin
+PATH = /home/adam/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin
 # default
 MAKEFILES := 
+# environment
+LANGUAGE = 
 # environment
 LC_MONETARY = pl_PL.UTF-8
 # environment
@@ -179,7 +181,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 733
+SYSTEMD_EXEC_PID = 496
 # environment
 DISPLAY = :0
 # environment
@@ -213,7 +215,8 @@ HOME = /home/adam
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-6339429b-1.66.2-main.sock
+ 
+VSCODE_IPC_HOOK = /run/user/1000/vscode-6339429b-1.66.0-main.sock
 # environment
 XDG_SESSION_ID = 1
 # environment
@@ -231,7 +234,7 @@ QT_AUTO_SCREEN_SCALE_FACTOR = 0
 # environment
 VSCODE_CLI = 1
 # environment
-TELEMETRY_ID = d9bbce3c-88f9-4edd-a746-166de6d23c4a
+TELEMETRY_ID = 0b9a2e4f-4b98-404f-a3c3-f0a85c786462
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
@@ -243,7 +246,7 @@ KDE_FULL_SESSION = true
 # environment
 LC_IDENTIFICATION = pl_PL.UTF-8
 # variable set hash-table stats:
-# Load=116/1024=11%, Rehash=0, Collisions=5/149=3%
+# Load=117/1024=11%, Rehash=0, Collisions=5/150=3%
 
 # Pattern-specific Variable Values
 
@@ -251,9 +254,9 @@ LC_IDENTIFICATION = pl_PL.UTF-8
 
 # Directories
 
-# . (device 2053, inode 8651204): 10 files, no impossibilities.
+# . (device 2049, inode 828815): 12 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -261,47 +264,28 @@ LC_IDENTIFICATION = pl_PL.UTF-8
 
 # Files
 
-# Not a target:
-Makefile:
-#  Implicit rule search has been done.
-#  Last modified 2022-04-28 09:13:07.153968197
-#  File has been updated.
-#  Successfully updated.
-
-clean: cleanC
+runDefault:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+#  recipe to execute (from 'Makefile', line 12):
+	@./build/coder/coder data/input/testy4/example0.tga data/output/def.tga 8
 
-buildC:
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-20 13:15:13.230089367
+#  File has been updated.
+#  Successfully updated.
+
+clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := buildC
-# automatic
-# * := 
-# automatic
- 
-# < := 
-# automatic
-# + := 
-# automatic
-# % := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'Makefile', line 8):
-	@go build -o build/coder/coder cmd/coderMain/coderMain.go
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 18):
+	@rm build/coder/*
 
 # Not a target:
 .DEFAULT:
@@ -318,30 +302,41 @@ all: build
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
-cleanC:
+run:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
-	@rm build/coder/*
+#  recipe to execute (from 'Makefile', line 9):
+	@./build/coder/coder $(IN) $(OUT) $(NUM)
 
-build: buildC
+build:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
+# automatic
+# @ := build
+# automatic
+# * := 
+# automatic
+# < := 
+# automatic
+# + := 
+# automatic
+# % := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# automatic
+# | := 
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
-
-runC:
-#  Phony target (prerequisite of .PHONY).
-#  Implicit rule search has not been done.
-#  File does not exist.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 11):
-	@./build/coder/coder $(IN) $(OUT)
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  recipe to execute (from 'Makefile', line 6):
+	@go build -o build/coder/coder cmd/coderMain/coderMain.go
 
 # Not a target:
 .SUFFIXES:
@@ -349,7 +344,7 @@ runC:
 #  Modification time never checked.
 #  File has not been updated.
 
-.PHONY: build buildC runC cleanO clean cleanC
+.PHONY: build cleanO clean run runDefault
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -359,23 +354,23 @@ cleanO:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
+#  recipe to execute (from 'Makefile', line 15):
 	@rm data/output/*
 
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/38=0%
+# Load=10/1024=1%, Rehash=0, Collisions=0/33=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 149 B / avg = 7 B
-# current buf: size = 8162 B / used = 149 B / count = 21 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 157 B / avg = 7 B
+# current buf: size = 8162 B / used = 157 B / count = 22 / avg = 7 B
 
-# strcache performance: lookups = 45 / hit rate = 53%
+# strcache performance: lookups = 42 / hit rate = 47%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=0/45=0%
-# Finished Make data base on Thu Apr 28 19:14:01 2022
+# Load=22/8192=0%, Rehash=0, Collisions=0/42=0%
+# Finished Make data base on Sun May 22 22:41:30 2022
 
  

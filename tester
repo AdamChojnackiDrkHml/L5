@@ -1,9 +1,11 @@
 #!/bin/bash
-rm data/results/*
-rm data/output/*
+
 make
-for i in {0..24}
+for num in {0..3}
 do
-    echo "$i"
-    ./build/coder/coder data/input/testy4/example0.tga "data/output/test$i.tga" "$i" > "data/results/res$i.txt"
+    for i in {0..10}
+    do
+        echo "$i"
+        ./build/coder/coder data/input/testy4/example${num}.tga "data/fixed/output/ex${num}/test$i.tga" "$i" > "data/fixed/res/ex${num}/res$i.txt"
+    done
 done

@@ -40,7 +40,7 @@ func Coder_createCoder(bitmap image.Image, colors int) *Coder {
 		for i := 0; i < bitmap.Bounds().Max.X; i++ {
 			r, g, b, _ := bitmap.At(i, j).RGBA()
 
-			newPixel := &pixel{colorVector: [3]uint32{r / 256, b / 256, g / 256}}
+			newPixel := &pixel{colorVector: [3]uint32{r / 256, g / 256, b / 256}}
 			coder.rgbBitMap = append(coder.rgbBitMap, newPixel)
 		}
 
